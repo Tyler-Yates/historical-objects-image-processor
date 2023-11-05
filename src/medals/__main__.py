@@ -25,9 +25,11 @@ def process_medal_image(input_path: str):
         return
 
     file_name = os.path.basename(input_path).split(".")[0]
-    hi_gallery = os.path.join(OUTPUT_DIRECTORY, "hi")
+    medal_name = os.path.basename(os.path.dirname(input_path))
+
+    hi_gallery = os.path.join(OUTPUT_DIRECTORY, medal_name, "hi")
     os.makedirs(hi_gallery, exist_ok=True)
-    low_gallery = os.path.join(OUTPUT_DIRECTORY, "low")
+    low_gallery = os.path.join(OUTPUT_DIRECTORY, medal_name, "low")
     os.makedirs(low_gallery, exist_ok=True)
 
     input_image = Image.open(input_path)
@@ -40,9 +42,18 @@ def process_medal_image(input_path: str):
     low_image = resize_to_max_dimension(input_image, LOW_MAX_DIMENSION)
     low_image.save(os.path.join(low_gallery, f"{file_name}.avif"), "AVIF", quality=LOW_QUALITY)
 
-    shutil.move(input_path, os.path.join(COMPLETED_DIRECTORY, os.path.basename(input_path)))
-
     print(f"Finished processing {input_path}")
+
+
+def process_medal_directory(input_path: str):
+    for item in os.listdir(input_path):
+        item_path = os.path.join(input_path, item)
+        if os.path.isfile(item_path):
+            process_medal_image(item_path)
+        else:
+            print(f"Ignoring item {item_path}")
+
+    shutil.move(input_path, os.path.join(COMPLETED_DIRECTORY, os.path.basename(input_path)))
 
 
 def main():
@@ -50,10 +61,10 @@ def main():
 
     for item in os.listdir(INPUT_DIRECTORY):
         item_path = os.path.join(INPUT_DIRECTORY, item)
-        if os.path.isfile(item_path):
-            process_medal_image(item_path)
+        if os.path.isdir(item_path):
+            process_medal_directory(item_path)
         else:
-            print(f"Ignoring item {item_path}")
+            print(f"ERROR!!!!!!! Ignoring item {item_path}")
 
 
 if __name__ == '__main__':
