@@ -32,11 +32,11 @@ def process_plate_image(input_path: str):
 
     # Save the high quality image with no resizing
     hi_image = resize_to_max_dimension(input_image, HI_MAX_DIMENSION)
-    hi_image.save(os.path.join(output_path, f"{plate_name}-hi.avif"), "AVIF", quality=HIGH_QUALITY)
+    hi_image.save(os.path.join(output_path, "plate-hi.avif"), "AVIF", quality=HIGH_QUALITY)
 
     # Resize the image for the low quality gallery
     low_image = resize_to_max_dimension(input_image, LOW_MAX_DIMENSION)
-    low_image.save(os.path.join(output_path, f"{plate_name}.avif"), "AVIF", quality=LOW_QUALITY)
+    low_image.save(os.path.join(output_path, "plate.avif"), "AVIF", quality=LOW_QUALITY)
 
     print(f"Finished processing {input_path}")
 
