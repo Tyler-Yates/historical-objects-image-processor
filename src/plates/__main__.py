@@ -15,8 +15,8 @@ OUTPUT_DIRECTORY = os.path.join(ROOT_PATH, "output", "plates")
 COMPLETED_DIRECTORY = os.path.join(ROOT_PATH, "completed", "plates")
 HIGH_QUALITY = 50
 LOW_QUALITY = 50
-HI_MAX_DIMENSION = 2500
-LOW_MAX_DIMENSION = 400
+HI_MAX_DIMENSION = 2000
+LOW_MAX_DIMENSION = 500
 
 
 def process_plate_image(input_path: str):
